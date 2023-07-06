@@ -22,7 +22,7 @@ class PopularRadios extends StatelessWidget {
       ),
       child: Text(
         "Popular Radios".toUpperCase(),
-        style: MontserratFont.heading4,
+        style: MontserratFont.heading4.copyWith(color: FontColors.primaryTextColor),
       ),
     );
   }

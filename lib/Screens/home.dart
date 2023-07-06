@@ -1,8 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
 import 'package:pandemonium/Screens/popular_radios.dart';
-import 'package:pandemonium/utils/custom_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -20,11 +19,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: const Icon(Icons.menu),
-        actions: const [
+        leading: InkWell(onTap: () {}, child: const Icon(Icons.menu)),
+        actions: [
           Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Icon(Icons.person_2_rounded),
+            padding: const EdgeInsets.all(16.0),
+            child: Icon(Platform.isIOS ? Icons.ios_share : Icons.share),
           )
         ],
       ),
@@ -36,10 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.all(16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   "Categories".toUpperCase(),
-                  style: MontserratFont.heading4,
+                  style: MontserratFont.heading4
+                      .copyWith(color: FontColors.primaryTextColor),
                 )),
             const Padding(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
