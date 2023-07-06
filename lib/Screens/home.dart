@@ -21,9 +21,12 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
         leading: InkWell(onTap: () {}, child: const Icon(Icons.menu)),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Icon(Platform.isIOS ? Icons.ios_share : Icons.share),
+          InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Icon(Platform.isIOS ? Icons.ios_share : Icons.share),
+            ),
           )
         ],
       ),
