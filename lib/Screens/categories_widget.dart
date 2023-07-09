@@ -3,45 +3,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/no_scrollglow_behaviour.dart';
 
-class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({super.key});
-
-  @override
-  State<CategoriesWidget> createState() => _CategoriesWidgetState();
-}
-
-class _CategoriesWidgetState extends State<CategoriesWidget> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    // TODO: fetch Categories
-    super.initState();
-  }
+class CategoriesWidget extends StatelessWidget {
+  final List<String> stationNames = ["Science","Pop","Music", "Dance", "Talk", "Radio", "Rock", "Hits", "Jazz", "Electronic"];
+  CategoriesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
-          height: ScreenUtil().setHeight(100),
+          height: ScreenUtil().setHeight(130),
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: 10,
+              itemCount: stationNames.length~/2,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: ScreenUtil().setWidth(((index % 2) + 2) * 50),
+                  width: ScreenUtil().setWidth(((index % 2) + 2) * 75),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
+                        width: 2,
                           color: index.isEven
                               ? FontColors.secondaryTextColor
                               : FontColors.primaryTextColor)),
                   child: Text(
-                    "Science".toUpperCase(),
+                    stationNames[index].toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
                         .copyWith(color: FontColors.secondaryTextColor),
                   ),
@@ -59,25 +49,26 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           height: ScreenUtil().setHeight(16),
         ),
         SizedBox(
-          height: ScreenUtil().setHeight(100),
+          height: ScreenUtil().setHeight(110),
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: 10,
+              itemCount: stationNames.length-(stationNames.length~/2),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: ScreenUtil().setWidth(((index % 2) + 2) * 62),
+                  width: ScreenUtil().setWidth((((index+1) % 2) + 2) * 70),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
+                          width: 2,
                           color: index.isOdd
                               ? FontColors.secondaryTextColor
                               : FontColors.primaryTextColor)),
                   child: Text(
-                    "History".toUpperCase(),
+                    stationNames[index+stationNames.length-(stationNames.length~/2)].toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
                         .copyWith(color: FontColors.secondaryTextColor),
                   ),

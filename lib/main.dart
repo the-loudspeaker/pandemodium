@@ -24,11 +24,12 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          title: 'Pandemonium',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: createMaterialColor(CustomColors.primaryGrey),
           ),
-          home: const MyHomePage(title: 'Pandemonium'),
+          home: const MyHomePage(),
         );
       },
     );

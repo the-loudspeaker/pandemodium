@@ -41,6 +41,7 @@ dependencies:
   flutter_screenutil: ^5.7.0
   multicast_dns: ^0.3.2+3
   http: ^0.13.6
+  miniplayer: ^1.0.1
 
 dev_dependencies:
   flutter_test:
