@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class RadioService {
   static Future<StationResponse> getPopularStations() async {
     var response = await http.get(Uri.parse(
-        'http://all.api.radio-browser.info/json/stations/search?country=India&hidebroken=true&order=votes&reverse=true&limit=3'));
+        'http://all.api.radio-browser.info/json/stations/search?country=India&hidebroken=true&order=votes&reverse=true&limit=5'));
     return StationResponse.fromList(jsonDecode(response.body));
   }
   static Future<CategoryResponse> getCategories() async {

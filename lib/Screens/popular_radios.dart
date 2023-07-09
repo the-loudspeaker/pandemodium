@@ -14,7 +14,7 @@ class PopularRadios extends StatefulWidget {
   State<PopularRadios> createState() => _PopularRadiosState();
 }
 
-class _PopularRadiosState extends State<PopularRadios> {
+class _PopularRadiosState extends State<PopularRadios> with AutomaticKeepAliveClientMixin<PopularRadios> {
   late Future<StationResponse> popularRadiosList;
 
   @override
@@ -24,7 +24,11 @@ class _PopularRadiosState extends State<PopularRadios> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder(
       future: popularRadiosList,
       builder: (BuildContext context, snapshot) {
@@ -47,6 +51,7 @@ class _PopularRadiosState extends State<PopularRadios> {
                       .copyWith(color: FontColors.primaryTextColor),
                 ),
                 ListView.separated(
+                  primary: false,
                   shrinkWrap: true,
                   itemCount: snapshot.data!.stationList!.length,
                   itemBuilder: (context, index) {
