@@ -7,6 +7,8 @@ class CategoryResponse {
 
   CategoryResponse.fromList(List<dynamic> json) {
     categoryList = <Category>[];
-    for (var element in json) {categoryList!.add(Category.fromJson(element));}
+    for (var element in json) {
+      categoryList!.add(Category.fromJson(element));
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:pandemonium/Screens/discover_screen.dart';
+import 'package:pandemonium/Screens/discover.dart';
+import 'package:pandemonium/Screens/library.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -37,57 +38,50 @@ class _MyHomePageState extends State<MyHomePage>
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
           "PANDEMONIUM",
-          style: MontserratFont.heading3,
+          style: MontserratFont.heading3
+              .copyWith(color: Theme.of(context).primaryColor),
         ),
         actions: [
-          InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Icon(Platform.isIOS ? Icons.ios_share : Icons.share),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                  color: Theme.of(context).primaryColor,
+                  Platform.isIOS ? Icons.ios_share : Icons.share),
             ),
           )
         ],
       ),
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _tabController,
-        children: const [
-          Discover(),
-          Center(child: Text("Page 2")),
-          Center(
-            child: Text("Page 3"),
-          )
-        ],
+      body: SafeArea(
+        child: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: const [
+            Discover(),
+            LibraryScreen(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 16,
-        selectedLabelStyle: MontserratFont.paragraphSemiBold2
-            .copyWith(color: FontColors.primaryTextColor),
-        unselectedLabelStyle: MontserratFont.captionSemiBold
-            .copyWith(color: FontColors.secondaryTextColor),
+        useLegacyColorScheme: false,
+        selectedLabelStyle: MontserratFont.paragraphSemiBold2,
+        unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'Settings',
+            icon: Icon(Icons.library_music),
+            label: 'Library',
           ),
         ],
         currentIndex: _tabController.index,
-        selectedItemColor: FontColors.primaryTextColor,
-        unselectedItemColor: FontColors.secondaryTextColor,
         onTap: _onItemTapped,
       ),
     );

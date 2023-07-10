@@ -4,7 +4,18 @@ import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/no_scrollglow_behaviour.dart';
 
 class CategoriesWidget extends StatelessWidget {
-  final List<String> stationNames = ["Science","Pop","Music", "Dance", "Talk", "Radio", "Rock", "Hits", "Jazz", "Electronic"];
+  final List<String> stationNames = [
+    "Science",
+    "Pop",
+    "Music",
+    "Dance",
+    "Talk",
+    "Radio",
+    "Rock",
+    "Hits",
+    "Jazz",
+    "Electronic"
+  ];
   CategoriesWidget({super.key});
 
   @override
@@ -16,7 +27,7 @@ class CategoriesWidget extends StatelessWidget {
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: stationNames.length~/2,
+              itemCount: stationNames.length ~/ 2,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
@@ -26,14 +37,14 @@ class CategoriesWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
-                        width: 2,
+                          width: 2,
                           color: index.isEven
-                              ? FontColors.secondaryTextColor
-                              : FontColors.primaryTextColor)),
+                              ? Theme.of(context).colorScheme.secondaryContainer
+                              : Theme.of(context).colorScheme.primary)),
                   child: Text(
                     stationNames[index].toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
-                        .copyWith(color: FontColors.secondaryTextColor),
+                        .copyWith(color: Theme.of(context).primaryColor),
                   ),
                 );
               },
@@ -53,24 +64,27 @@ class CategoriesWidget extends StatelessWidget {
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: stationNames.length-(stationNames.length~/2),
+              itemCount: stationNames.length - (stationNames.length ~/ 2),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: ScreenUtil().setWidth((((index+1) % 2) + 2) * 70),
+                  width: ScreenUtil().setWidth((((index + 1) % 2) + 2) * 70),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                           width: 2,
                           color: index.isOdd
-                              ? FontColors.secondaryTextColor
-                              : FontColors.primaryTextColor)),
+                              ? Theme.of(context).colorScheme.secondaryContainer
+                              : Theme.of(context).colorScheme.primary)),
                   child: Text(
-                    stationNames[index+stationNames.length-(stationNames.length~/2)].toUpperCase(),
+                    stationNames[index +
+                            stationNames.length -
+                            (stationNames.length ~/ 2)]
+                        .toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
-                        .copyWith(color: FontColors.secondaryTextColor),
+                        .copyWith(color: Theme.of(context).primaryColor),
                   ),
                 );
               },

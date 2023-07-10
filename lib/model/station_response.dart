@@ -7,6 +7,8 @@ class StationResponse {
 
   StationResponse.fromList(List<dynamic> json) {
     stationList = <Station>[];
-    for (var element in json) {stationList!.add(Station.fromJson(element));}
+    for (var element in json) {
+      stationList!.add(Station.fromJson(element));
+    }
   }
 }

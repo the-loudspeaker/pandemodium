@@ -43,4 +43,3 @@ class FontColors {
   static var primaryTextColor = const Color(0xFF282828);
   static var secondaryTextColor = const Color(0xFF828282);
 }
-

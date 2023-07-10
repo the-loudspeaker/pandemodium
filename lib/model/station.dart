@@ -142,18 +142,3 @@ class Station {
     return data;
   }
 }
-
-// class CommaSeparatedStringList {
-//   final List<String> strings;
-//
-//   CommaSeparatedStringList(this.strings);
-//
-//   @override
-//   String toString() {
-//     return strings.join(',');
-//   }
-//
-//   fromString() {
-//     return CommaSeparatedStringList(strings);
-//   }
-// }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/home.dart';
-import 'package:pandemonium/utils/create_material_color.dart';
-import 'package:pandemonium/utils/custom_colors.dart';
+import 'package:pandemonium/model/radio_data.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -23,13 +23,15 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          title: 'Pandemonium',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: createMaterialColor(CustomColors.primaryGrey),
+        return MultiProvider(
+          providers: [ChangeNotifierProvider(create: (context) => RadioData())],
+          child: MaterialApp(
+            title: 'Pandemonium',
+            debugShowCheckedModeBanner: false,
+            color: Theme.of(context).primaryColor,
+            theme: ThemeData(useMaterial3: true),
+            home: const MyHomePage(),
           ),
-          home: const MyHomePage(),
         );
       },
     );
