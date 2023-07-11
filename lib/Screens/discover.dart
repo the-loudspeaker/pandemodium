@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
 import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
@@ -90,10 +91,25 @@ class _DiscoverState extends State<Discover>
                               return RadioListBuilder(
                                 stationList: snapshot.data!.stationList!,
                                 index: index,
-                                callback: () {
-                                  Provider.of<RadioData>(context, listen: false)
+                                longPressCallback: () {
+                                  bool wasStationAdded = Provider.of<RadioData>(context, listen: false)
                                       .addStation(
                                           snapshot.data!.stationList![index]);
+                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    showCloseIcon: true,
+                                    closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: ScreenUtil().setHeight(64),
+                                        horizontal: ScreenUtil().setHeight(16)),
+                                    content: Text(
+                                      wasStationAdded ? "Radio station added to library" : "Radio station exists in library",
+                                      style: MontserratFont.paragraphSemiBold2
+                                          .copyWith(color: Theme.of(context).snackBarTheme.actionTextColor),
+                                    ),
+                                    backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
                                 },
                               );
                             },

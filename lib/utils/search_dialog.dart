@@ -105,8 +105,26 @@ class _SearchDialogState extends State<SearchDialog> {
                                   .colorScheme
                                   .secondaryContainer,
                               onTap: () {
-                                Provider.of<RadioData>(context, listen: false)
+                                bool wasStationAdded = Provider.of<RadioData>(
+                                        context,
+                                        listen: false)
                                     .addStation(searchedStations[index]);
+                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  showCloseIcon: true,
+                                  closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: ScreenUtil().setHeight(64),
+                                      horizontal: ScreenUtil().setHeight(16)),
+                                  content: Text(
+                                    wasStationAdded ? "Radio station added to library" : "Radio station exists in library",
+                                    style: MontserratFont.paragraphSemiBold2
+                                        .copyWith(color: Theme.of(context).snackBarTheme.actionTextColor),
+                                  ),
+                                  backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
+                                  behavior: SnackBarBehavior.floating,
+                                ));
+                                Navigator.pop(context, 'Ok');
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -7,19 +7,21 @@ import 'custom_fonts.dart';
 class RadioListBuilder extends StatelessWidget {
   final List<Station> stationList;
   final int index;
-  final VoidCallback? callback;
+  final VoidCallback? longPressCallback;
+  final VoidCallback? onTapCallback;
   const RadioListBuilder({
     super.key,
     required this.stationList,
     required this.index,
-    this.callback,
+    this.longPressCallback, this.onTapCallback,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Theme.of(context).colorScheme.secondaryContainer,
-      onLongPress: callback,
+      onLongPress: longPressCallback,
+      onTap: onTapCallback,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(8)),
         child: Row(

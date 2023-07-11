@@ -5,20 +5,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'station.dart';
 
 class RadioData extends ChangeNotifier {
-  Set<Station> stationSet = {};
+  List<Station> stationList = [];
 
-  void addStation(Station newStation) {
-    if (stationSet
+  bool addStation(Station newStation) {
+    if (stationList
         .where((element) => element.stationuuid == newStation.stationuuid)
         .isEmpty) {
-      stationSet.add(newStation);
+      stationList.add(newStation);
       notifyListeners();
       saveData();
+      return true;
+    }
+    else{
+      return false;
     }
   }
 
   void removeStation(Station station) {
-    stationSet.removeWhere((item) => item.stationuuid == station.stationuuid);
+    stationList.removeWhere((item) => item.stationuuid == station.stationuuid);
     notifyListeners();
     saveData();
   }
@@ -26,8 +30,9 @@ class RadioData extends ChangeNotifier {
   void saveData() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final String encodedData = encode(stationSet.toList());
+      final String encodedData = encode(stationList);
       await prefs.setString('radio_data', encodedData);
+      print("saved data");
     } on Exception catch (e) {
       debugPrint(e.toString());
     }
@@ -37,8 +42,9 @@ class RadioData extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       final String taskString = prefs.getString('radio_data').toString();
-      Set<Station> radioData = decode(taskString);
-      stationSet = radioData;
+      List<Station> radioData = decode(taskString);
+      stationList = radioData;
+      print("got data");
     } on Exception catch (e) {
       debugPrint(e.toString());
     }
@@ -52,17 +58,16 @@ class RadioData extends ChangeNotifier {
     );
   }
 
-  static Set<Station> decode(String stations) {
+  static List<Station> decode(String stations) {
     var data = (jsonDecode(stations) as List<dynamic>?);
     if (data != null) {
       return (jsonDecode(stations) as List<dynamic>?)!
           .map<Station>((task) {
             return Station.fromJson(task);
           })
-          .toList()
-          .toSet();
+          .toList();
     } else {
-      return <Station>{};
+      return <Station>[];
     }
   }
 }
