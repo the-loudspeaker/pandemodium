@@ -32,7 +32,6 @@ class RadioData extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       final String encodedData = encode(stationList);
       await prefs.setString('radio_data', encodedData);
-      print("saved data");
     } on Exception catch (e) {
       debugPrint(e.toString());
     }
@@ -44,7 +43,6 @@ class RadioData extends ChangeNotifier {
       final String taskString = prefs.getString('radio_data').toString();
       List<Station> radioData = decode(taskString);
       stationList = radioData;
-      print("got data");
     } on Exception catch (e) {
       debugPrint(e.toString());
     }

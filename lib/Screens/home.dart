@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage>
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          "PANDEMONIUM",
+          _tabController.index==0 ? "PANDEMONIUM" : "Favourites",
           style: MontserratFont.heading3
               .copyWith(color: Theme.of(context).primaryColor),
         ),

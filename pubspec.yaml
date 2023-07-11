@@ -37,10 +37,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_staggered_grid_view: ^0.6.2
-  google_fonts: ^4.0.4
+  google_fonts: ^5.1.0
   flutter_screenutil: ^5.7.0
   multicast_dns: ^0.3.2+3
-  http: ^0.13.6
+  http: ^1.1.0
   miniplayer: ^1.0.1
   provider: ^6.0.5
   shared_preferences: ^2.2.0

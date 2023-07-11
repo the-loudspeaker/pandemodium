@@ -6,3 +6,4 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [] Add player.
 - [] Fix material 13 theme.
 - [x] Add toasts / snackBars.
+- [] move keyboard above everything.
