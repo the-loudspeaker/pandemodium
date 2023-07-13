@@ -64,13 +64,10 @@ class RadioListBuilder extends StatelessWidget {
                   width: 1.0,
                 ),
               ),
-              child: InkWell(
-                onTap: () {},
-                child: CircleAvatar(
-                  radius: ScreenUtil().setHeight(16),
-                  child: Icon(
-                      color: Theme.of(context).primaryColor, Icons.play_arrow),
-                ),
+              child: CircleAvatar(
+                radius: ScreenUtil().setHeight(16),
+                child: Icon(
+                    color: Theme.of(context).primaryColor, Icons.play_arrow),
               ),
             ),
           ],
