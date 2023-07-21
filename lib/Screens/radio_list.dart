@@ -10,7 +10,6 @@ class RadioList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<RadioData>(context).getData();
     return ListView.separated(
         itemBuilder: (context, index) {
           return RadioListBuilder(

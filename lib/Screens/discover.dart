@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
+import 'package:pandemonium/Screens/player.dart';
 import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
 import 'package:pandemonium/model/station_response.dart';
@@ -117,7 +118,8 @@ class _DiscoverState extends State<Discover>
                               },
                               onTapCallback: (){
                                 debugPrint("Clicked on a station ${snapshot.data!.stationList![index].name}");
-                              },
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerScreen(station: snapshot.data!.stationList![index])));
+                                },
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {

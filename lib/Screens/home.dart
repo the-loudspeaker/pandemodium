@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pandemonium/Screens/discover.dart';
 import 'package:pandemonium/Screens/library.dart';
+import 'package:pandemonium/model/radio_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -35,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<RadioData>(context).getData();
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
