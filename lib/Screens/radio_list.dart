@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/radio_list_builder.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,18 @@ class RadioList extends StatelessWidget {
           return RadioListBuilder(
             stationList: Provider.of<RadioData>(context).stationList.reversed.toList(),
             index: index,
+            onTapCallback: (){
+              debugPrint(
+                  "Clicked on a station ${Provider.of<RadioData>(context, listen: false)
+                      .stationList.reversed
+                      .toList()[index].name}");
+              Provider.of<StationData>(context,
+                  listen: false)
+                  .playRadio(
+                  Provider.of<RadioData>(context, listen: false)
+                      .stationList.reversed
+                      .toList()[index]);
+            },
             longPressCallback: () {
               Provider.of<RadioData>(context, listen: false).removeStation(
                   Provider.of<RadioData>(context, listen: false)
@@ -25,8 +38,8 @@ class RadioList extends StatelessWidget {
                 showCloseIcon: true,
                 closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
                 margin: EdgeInsets.symmetric(
-                    vertical: ScreenUtil().setHeight(64),
-                    horizontal: ScreenUtil().setHeight(16)),
+                    vertical: 64.h,
+                    horizontal: 16.w),
                 content: Text(
                   "Radio station removed from library",
                   style: MontserratFont.paragraphSemiBold2

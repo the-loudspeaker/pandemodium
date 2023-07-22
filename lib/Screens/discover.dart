@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
-import 'package:pandemonium/Screens/player.dart';
 import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
+import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/model/station_response.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/radio_list_builder.dart';
@@ -25,14 +25,17 @@ class _DiscoverState extends State<Discover>
   @override
   void initState() {
     popularRadiosList = fetchPopularRadios();
+    RadioService.dnsLookup();
     super.initState();
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<RadioData>(context, listen: false).getData();
+    Provider.of<StationData>(context, listen: false).getLastPlayed();
     super.build(context);
     return SingleChildScrollView(
       primary: false,
@@ -42,7 +45,8 @@ class _DiscoverState extends State<Discover>
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding:
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: Text(
                 "Categories".toUpperCase(),
                 style: MontserratFont.heading4
@@ -72,8 +76,8 @@ class _DiscoverState extends State<Discover>
                       children: [
                         Text(
                           "Popular Radios".toUpperCase(),
-                          style: MontserratFont.heading4
-                              .copyWith(color: Theme.of(context).primaryColor),
+                          style: MontserratFont.heading4.copyWith(
+                              color: Theme.of(context).primaryColor),
                         ),
                         ListView.separated(
                           primary: false,
@@ -85,10 +89,10 @@ class _DiscoverState extends State<Discover>
                               index: index,
                               longPressCallback: () {
                                 bool wasStationAdded = Provider.of<RadioData>(
-                                        context,
-                                        listen: false)
+                                    context,
+                                    listen: false)
                                     .addStation(
-                                        snapshot.data!.stationList![index]);
+                                    snapshot.data!.stationList![index]);
                                 ScaffoldMessenger.of(context)
                                     .hideCurrentSnackBar();
                                 ScaffoldMessenger.of(context)
@@ -98,17 +102,16 @@ class _DiscoverState extends State<Discover>
                                       .snackBarTheme
                                       .closeIconColor,
                                   margin: EdgeInsets.symmetric(
-                                      vertical: ScreenUtil().setHeight(64),
-                                      horizontal: ScreenUtil().setHeight(16)),
+                                      vertical: 64.h, horizontal: 16.w),
                                   content: Text(
                                     wasStationAdded
                                         ? "Radio station added to library"
                                         : "Radio station exists in library",
                                     style: MontserratFont.paragraphSemiBold2
                                         .copyWith(
-                                            color: Theme.of(context)
-                                                .snackBarTheme
-                                                .actionTextColor),
+                                        color: Theme.of(context)
+                                            .snackBarTheme
+                                            .actionTextColor),
                                   ),
                                   backgroundColor: Theme.of(context)
                                       .snackBarTheme
@@ -116,13 +119,18 @@ class _DiscoverState extends State<Discover>
                                   behavior: SnackBarBehavior.floating,
                                 ));
                               },
-                              onTapCallback: (){
-                                debugPrint("Clicked on a station ${snapshot.data!.stationList![index].name}");
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerScreen(station: snapshot.data!.stationList![index])));
-                                },
+                              onTapCallback: () {
+                                debugPrint(
+                                    "Clicked on a station ${snapshot.data!.stationList![index].name}");
+                                Provider.of<StationData>(context,
+                                    listen: false)
+                                    .playRadio(
+                                    snapshot.data!.stationList![index]);
+                              },
                             );
                           },
-                          separatorBuilder: (BuildContext context, int index) {
+                          separatorBuilder:
+                              (BuildContext context, int index) {
                             return const Divider();
                           },
                         )
@@ -143,7 +151,7 @@ class _DiscoverState extends State<Discover>
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                          const BorderRadius.all(Radius.circular(16)),
                           border: Border.all(
                               color: Theme.of(context).primaryColor)),
                       child: Row(

@@ -23,7 +23,7 @@ class RadioListBuilder extends StatelessWidget {
       onLongPress: longPressCallback,
       onTap: onTapCallback,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(8)),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,

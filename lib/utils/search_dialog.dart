@@ -40,10 +40,12 @@ class _SearchDialogState extends State<SearchDialog> {
       });
       await RadioService.searchRadios(_textEditingController.text)
           .then((value) {
-        setState(() {
-          searchedStations = value.stationList!;
-          showLoader = false;
-        });
+            if(mounted) {
+              setState(() {
+                searchedStations = value.stationList!;
+                showLoader = false;
+              });
+            }
       });
     } else {
       setState(() {
@@ -114,8 +116,8 @@ class _SearchDialogState extends State<SearchDialog> {
                                   showCloseIcon: true,
                                   closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
                                   margin: EdgeInsets.symmetric(
-                                      vertical: ScreenUtil().setHeight(64),
-                                      horizontal: ScreenUtil().setHeight(16)),
+                                      vertical: 64.h,
+                                      horizontal: 16.w),
                                   content: Text(
                                     wasStationAdded ? "Radio station added to library" : "Radio station exists in library",
                                     style: MontserratFont.paragraphSemiBold2

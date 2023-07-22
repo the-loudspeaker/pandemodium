@@ -43,6 +43,7 @@ class RadioData extends ChangeNotifier {
       final String taskString = prefs.getString('radio_data').toString();
       List<Station> radioData = decode(taskString);
       stationList = radioData;
+      notifyListeners();
     } on Exception catch (e) {
       debugPrint(e.toString());
     }

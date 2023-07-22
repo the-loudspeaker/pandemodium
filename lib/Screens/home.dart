@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/discover.dart';
 import 'package:pandemonium/Screens/library.dart';
-import 'package:pandemonium/model/radio_data.dart';
+import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void dispose() {
     _tabController.dispose();
+    Provider.of<StationData>(context, listen: false).endRadio();
     super.dispose();
   }
 
@@ -37,13 +40,13 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<RadioData>(context).getData();
     return Scaffold(
       extendBody: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          _tabController.index==0 ? "PANDEMONIUM" : "Favourites",
+          _tabController.index == 0 ? "PANDEMONIUM" : "Favourites",
           style: MontserratFont.heading3
               .copyWith(color: Theme.of(context).primaryColor),
         ),
@@ -52,9 +55,11 @@ class _MyHomePageState extends State<MyHomePage>
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(
-                  color: Theme.of(context).primaryColor,
-                  Platform.isIOS ? Icons.ios_share : Icons.share),
+              icon: _tabController.index == 0
+                  ? Icon(
+                      color: Theme.of(context).primaryColor,
+                      Platform.isIOS ? Icons.ios_share : Icons.share)
+                  : Icon(Icons.help, color: Theme.of(context).primaryColor),
             ),
           )
         ],
@@ -69,24 +74,109 @@ class _MyHomePageState extends State<MyHomePage>
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 16,
-        useLegacyColorScheme: false,
-        selectedLabelStyle: MontserratFont.paragraphSemiBold2,
-        unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_music),
-            label: 'Library',
-          ),
-        ],
-        currentIndex: _tabController.index,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomSheet: _bottomSheetBuilder(context),
     );
+  }
+
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      elevation: 16,
+      useLegacyColorScheme: false,
+      selectedLabelStyle: MontserratFont.paragraphSemiBold2,
+      unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.library_music),
+          label: 'Library',
+        ),
+      ],
+      currentIndex: _tabController.index,
+      onTap: _onItemTapped,
+    );
+  }
+}
+
+GestureDetector? _bottomSheetBuilder(BuildContext context) {
+  return Provider.of<StationData>(context).currentState != MediaStates.end
+      ? GestureDetector(
+          onVerticalDragUpdate: (verticalDragUpdate) {
+            if (verticalDragUpdate.delta.dy > 1.5 &&
+                Provider.of<StationData>(context, listen: false).currentState !=
+                    MediaStates.end) {
+              Provider.of<StationData>(context, listen: false).endRadio();
+            }
+          },
+          child: Container(
+            height: 64.h,
+            color: Theme.of(context).canvasColor,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Provider.of<StationData>(context)
+                                  .selectedStation
+                                  .name
+                                  ?.toUpperCase() ??
+                              "",
+                          style: MontserratFont.paragraphSemiBold1
+                              .copyWith(color: Theme.of(context).primaryColor),
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                            Provider.of<StationData>(context)
+                                    .selectedStation
+                                    .homepage
+                                    ?.toUpperCase() ??
+                                "",
+                            style: MontserratFont.captionMedium.copyWith(
+                                color: Theme.of(context).colorScheme.secondary),
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis)
+                      ],
+                    ),
+                  ),
+                  _mediaIconWidget(context),
+                ],
+              ),
+            ),
+          ),
+        )
+      : null;
+}
+
+Widget _mediaIconWidget(BuildContext context) {
+  switch (Provider.of<StationData>(context).currentState) {
+    case MediaStates.play:
+      return IconButton(
+        onPressed: () {
+          Provider.of<StationData>(context, listen: false).stopRadio(
+              Provider.of<StationData>(context, listen: false).selectedStation);
+        },
+        icon: Icon(color: Theme.of(context).primaryColor, Icons.stop),
+      );
+    case MediaStates.loading:
+      return Icon(Icons.circle_outlined, color: Theme.of(context).primaryColor);
+    default:
+      return IconButton(
+        icon: Icon(color: Theme.of(context).primaryColor, Icons.play_arrow),
+        onPressed: () {
+          Provider.of<StationData>(context, listen: false).playRadio(
+              Provider.of<StationData>(context, listen: false).selectedStation);
+        },
+      );
   }
 }

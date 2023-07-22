@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/home.dart';
 import 'package:pandemonium/model/radio_data.dart';
+import 'package:pandemonium/model/station_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
         return MultiProvider(
-          providers: [ChangeNotifierProvider(create: (context) => RadioData())],
+          providers: [
+            ChangeNotifierProvider(create: (context) => RadioData()),
+            ChangeNotifierProvider(create: (context) => StationData())
+          ],
           child: MaterialApp(
             title: 'Pandemonium',
             debugShowCheckedModeBanner: false,

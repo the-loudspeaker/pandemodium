@@ -41,9 +41,11 @@ dependencies:
   flutter_screenutil: ^5.7.0
   multicast_dns: ^0.3.2+3
   http: ^1.1.0
-  miniplayer: ^1.0.1
   provider: ^6.0.5
   shared_preferences: ^2.2.0
+  persistent_bottom_nav_bar: ^5.0.2
+  audioplayers: ^0.18.3
+  basic_utils: ^5.6.1
 
 dev_dependencies:
   flutter_test:
