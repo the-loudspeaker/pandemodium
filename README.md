@@ -13,4 +13,7 @@ Explore the world of music and podcasts with a touch of magic and mystery.
   - [x] try just audio
 - [] Categories page.
   ~~- [] Fetch categories dynamically.~~
+- [] Move to audio_service instead of just_audio_background.
+- [] Add icon.
 - [] Release on f droid.
+- [] Release on play store.
