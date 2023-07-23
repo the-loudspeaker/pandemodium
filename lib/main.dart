@@ -7,10 +7,6 @@ import 'package:pandemonium/model/station_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    statusBarColor: Colors.white,
-  ));
   runApp(const MyApp());
 }
 

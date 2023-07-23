@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'station.dart';
@@ -10,45 +10,41 @@ class StationData extends ChangeNotifier {
   Station selectedStation = Station();
   MediaStates currentState = MediaStates.end;
   final player = AudioPlayer();
+  StationData() {
+    _init();
+  }
 
-  void playRadio( Station inputStation ) async {
+  void playRadio(Station inputStation) async {
     debugPrint(inputStation.urlResolved);
-    switch(currentState){
-      case MediaStates.play:
-        if(inputStation.stationuuid!=selectedStation.stationuuid){
-          await player.stop();
-          await player.play(inputStation.urlResolved.toString(), isLocal: false);
-        }
-        break;
-      case MediaStates.stop:
-        await player.play(inputStation.urlResolved.toString(), isLocal: false);
-        break;
-      case MediaStates.end:
-        await player.play(inputStation.urlResolved.toString(), isLocal: false);
-        break;
-      case MediaStates.loading:
-        break;
+    if (player.playing &&
+        inputStation.stationuuid == selectedStation.stationuuid) {
+      //Do nothing.
+    } else if (!player.playing &&
+        inputStation.stationuuid == selectedStation.stationuuid) {
+      await player.setUrl(inputStation.urlResolved.toString());
+      await player.play();
+      selectedStation = inputStation;
+    } else {
+      await player.stop();
+      selectedStation = inputStation;
+      await player.setUrl(inputStation.urlResolved.toString());
+      await player.play();
     }
-    currentState=MediaStates.play;
-    selectedStation = inputStation;
     notifyListeners();
     saveLastPlayed();
   }
 
-  void stopRadio(Station inputStation) async {
+  void stopRadio() async {
     await player.stop();
-    currentState=MediaStates.stop;
-    selectedStation = inputStation;
+    // currentState = MediaStates.stop;
+    // selectedStation = inputStation;
     notifyListeners();
     saveLastPlayed();
   }
 
   void endRadio() async {
-    await player.stop();
-    await player.release();
-    currentState=MediaStates.end;
-    notifyListeners();
-    saveLastPlayed();
+    currentState = MediaStates.end;
+    stopRadio();
   }
 
   void saveLastPlayed() async {
@@ -67,6 +63,9 @@ class StationData extends ChangeNotifier {
       final String lastStation = prefs.getString('last_played').toString();
       Station stationData = decode(lastStation);
       selectedStation = stationData;
+      if (currentState != MediaStates.end) {
+        currentState == MediaStates.end;
+      }
       notifyListeners();
     } on Exception catch (e) {
       debugPrint(e.toString());
@@ -85,8 +84,22 @@ class StationData extends ChangeNotifier {
       return Station();
     }
   }
+
+  void _init() {
+    player.playerStateStream.listen((playerState) {
+      final isPlaying = playerState.playing;
+      final processingState = playerState.processingState;
+      if (processingState == ProcessingState.loading ||
+          processingState == ProcessingState.buffering) {
+        currentState = MediaStates.loading;
+      } else if (!isPlaying) {
+        currentState = MediaStates.stop;
+      } else {
+        currentState = MediaStates.play;
+      }
+      notifyListeners();
+    });
+  }
 }
 
-enum MediaStates {
-  play, stop, end, loading
-}
+enum MediaStates { play, stop, end, loading }

@@ -6,11 +6,11 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [x] Add player.
 - [] Fix material 13 theme.
 - [x] Add toasts / snackBars.
-- [] move keyboard above everything.
+~~- [] move keyboard above everything.~~
 - [x] Retry button on API error.
 - [x] Searching and storing stable servers.
 - [] Notification playback
-  - [] try just audio
+  - [x] try just audio
 - [] Categories page.
-  - [] Fetch categories dynamically.
+  ~~- [] Fetch categories dynamically.~~
 - [] Release on f droid.

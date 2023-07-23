@@ -9,7 +9,7 @@ String baseurl = "http://all.api.radio-browser.info";
 class RadioService {
   static Future<StationResponse> getPopularStations() async {
     var response = await http.get(Uri.parse(
-        '$baseurl/json/stations/search?countrycode=IN&hidebroken=true&order=votes&reverse=true&limit=5'));
+        '$baseurl/json/stations/search?hidebroken=true&order=clickcount&reverse=true&limit=5'));
     return StationResponse.fromList(jsonDecode(response.body));
   }
 
@@ -36,6 +36,5 @@ class RadioService {
     else{
       baseurl="http://$apiEndpoint";
     }
-    print(baseurl);
   }
 }

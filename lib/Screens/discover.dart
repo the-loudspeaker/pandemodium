@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
@@ -37,150 +39,170 @@ class _DiscoverState extends State<Discover>
     Provider.of<RadioData>(context, listen: false).getData();
     Provider.of<StationData>(context, listen: false).getLastPlayed();
     super.build(context);
-    return SingleChildScrollView(
-      primary: false,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text("PANDEMONIUM",
+          style: MontserratFont.heading3
+              .copyWith(color: Theme.of(context).primaryColor),
+        ),
+        actions: [
           Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              child: Text(
-                "Categories".toUpperCase(),
-                style: MontserratFont.heading4
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              )),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: CategoriesWidget(),
-          ),
-          FutureBuilder(
-            future: popularRadiosList,
-            builder: (BuildContext context,
-                AsyncSnapshot<StationResponse> snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                    padding: const EdgeInsets.all(16),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Popular Radios".toUpperCase(),
-                          style: MontserratFont.heading4.copyWith(
-                              color: Theme.of(context).primaryColor),
-                        ),
-                        ListView.separated(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.stationList!.length,
-                          itemBuilder: (context, index) {
-                            return RadioListBuilder(
-                              stationList: snapshot.data!.stationList!,
-                              index: index,
-                              longPressCallback: () {
-                                bool wasStationAdded = Provider.of<RadioData>(
-                                    context,
-                                    listen: false)
-                                    .addStation(
-                                    snapshot.data!.stationList![index]);
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  showCloseIcon: true,
-                                  closeIconColor: Theme.of(context)
-                                      .snackBarTheme
-                                      .closeIconColor,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 64.h, horizontal: 16.w),
-                                  content: Text(
-                                    wasStationAdded
-                                        ? "Radio station added to library"
-                                        : "Radio station exists in library",
-                                    style: MontserratFont.paragraphSemiBold2
-                                        .copyWith(
-                                        color: Theme.of(context)
-                                            .snackBarTheme
-                                            .actionTextColor),
-                                  ),
-                                  backgroundColor: Theme.of(context)
-                                      .snackBarTheme
-                                      .backgroundColor,
-                                  behavior: SnackBarBehavior.floating,
-                                ));
-                              },
-                              onTapCallback: () {
-                                debugPrint(
-                                    "Clicked on a station ${snapshot.data!.stationList![index].name}");
-                                Provider.of<StationData>(context,
-                                    listen: false)
-                                    .playRadio(
-                                    snapshot.data!.stationList![index]);
-                              },
-                            );
-                          },
-                          separatorBuilder:
-                              (BuildContext context, int index) {
-                            return const Divider();
-                          },
-                        )
-                      ],
-                    ));
-              }
-              if (snapshot.hasError) {
-                debugPrint(snapshot.error.toString());
-                return Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        popularRadiosList = fetchPopularRadios();
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: IconButton(
+              onPressed: () {},
+              icon:Icon(
+                  color: Theme.of(context).primaryColor,
+                  Platform.isIOS ? Icons.ios_share : Icons.share),
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        primary: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                child: Text(
+                  "Categories".toUpperCase(),
+                  style: MontserratFont.heading4
+                      .copyWith(color: Theme.of(context).colorScheme.primary),
+                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: CategoriesWidget(),
+            ),
+            FutureBuilder(
+              future: popularRadiosList,
+              builder: (BuildContext context,
+                  AsyncSnapshot<StationResponse> snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                      padding: const EdgeInsets.all(16),
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(16)),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor)),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Error loading popular radios. Retry",
-                            style: MontserratFont.paragraphMedium2.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            softWrap: true,
+                            "Popular Radios".toUpperCase(),
+                            style: MontserratFont.heading4.copyWith(
+                                color: Theme.of(context).primaryColor),
                           ),
-                          const SizedBox(width: 4),
-                          Icon(
-                              color: Theme.of(context).primaryColor,
-                              Icons.refresh),
+                          ListView.separated(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.stationList!.length,
+                            itemBuilder: (context, index) {
+                              return RadioListBuilder(
+                                stationList: snapshot.data!.stationList!,
+                                index: index,
+                                longPressCallback: () {
+                                  bool wasStationAdded = Provider.of<RadioData>(
+                                      context,
+                                      listen: false)
+                                      .addStation(
+                                      snapshot.data!.stationList![index]);
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    showCloseIcon: true,
+                                    closeIconColor: Theme.of(context)
+                                        .snackBarTheme
+                                        .closeIconColor,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 64.h, horizontal: 16.w),
+                                    content: Text(
+                                      wasStationAdded
+                                          ? "Radio station added to library"
+                                          : "Radio station exists in library",
+                                      style: MontserratFont.paragraphSemiBold2
+                                          .copyWith(
+                                          color: Theme.of(context)
+                                              .snackBarTheme
+                                              .actionTextColor),
+                                    ),
+                                    backgroundColor: Theme.of(context)
+                                        .snackBarTheme
+                                        .backgroundColor,
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                },
+                                onTapCallback: () {
+                                  debugPrint(
+                                      "Clicked on a station ${snapshot.data!.stationList![index].name}");
+                                  Provider.of<StationData>(context,
+                                      listen: false)
+                                      .playRadio(
+                                      snapshot.data!.stationList![index]);
+                                },
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const Divider();
+                            },
+                          )
                         ],
+                      ));
+                }
+                if (snapshot.hasError) {
+                  debugPrint(snapshot.error.toString());
+                  return Center(
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          popularRadiosList = fetchPopularRadios();
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Error loading popular radios. Retry",
+                              style: MontserratFont.paragraphMedium2.copyWith(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              softWrap: true,
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                                color: Theme.of(context).primaryColor,
+                                Icons.refresh),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

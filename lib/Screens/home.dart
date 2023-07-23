@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/discover.dart';
@@ -42,28 +40,8 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      primary: false,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          _tabController.index == 0 ? "PANDEMONIUM" : "Favourites",
-          style: MontserratFont.heading3
-              .copyWith(color: Theme.of(context).primaryColor),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: IconButton(
-              onPressed: () {},
-              icon: _tabController.index == 0
-                  ? Icon(
-                      color: Theme.of(context).primaryColor,
-                      Platform.isIOS ? Icons.ios_share : Icons.share)
-                  : Icon(Icons.help, color: Theme.of(context).primaryColor),
-            ),
-          )
-        ],
-      ),
       body: SafeArea(
         child: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
@@ -113,45 +91,43 @@ GestureDetector? _bottomSheetBuilder(BuildContext context) {
           },
           child: Container(
             height: 64.h,
-            color: Theme.of(context).canvasColor,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Provider.of<StationData>(context)
+                                .selectedStation
+                                .name
+                                ?.toUpperCase() ??
+                            "",
+                        style: MontserratFont.paragraphSemiBold1
+                            .copyWith(color: Theme.of(context).primaryColor),
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
                           Provider.of<StationData>(context)
                                   .selectedStation
-                                  .name
+                                  .homepage
                                   ?.toUpperCase() ??
                               "",
-                          style: MontserratFont.paragraphSemiBold1
-                              .copyWith(color: Theme.of(context).primaryColor),
+                          style: MontserratFont.captionMedium.copyWith(
+                              color: Theme.of(context).colorScheme.secondary),
                           textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                            Provider.of<StationData>(context)
-                                    .selectedStation
-                                    .homepage
-                                    ?.toUpperCase() ??
-                                "",
-                            style: MontserratFont.captionMedium.copyWith(
-                                color: Theme.of(context).colorScheme.secondary),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis)
-                      ],
-                    ),
+                          overflow: TextOverflow.ellipsis)
+                    ],
                   ),
-                  _mediaIconWidget(context),
-                ],
-              ),
+                ),
+                _mediaIconWidget(context),
+              ],
             ),
           ),
         )
@@ -163,13 +139,16 @@ Widget _mediaIconWidget(BuildContext context) {
     case MediaStates.play:
       return IconButton(
         onPressed: () {
-          Provider.of<StationData>(context, listen: false).stopRadio(
-              Provider.of<StationData>(context, listen: false).selectedStation);
+          Provider.of<StationData>(context, listen: false).stopRadio();
         },
         icon: Icon(color: Theme.of(context).primaryColor, Icons.stop),
       );
     case MediaStates.loading:
-      return Icon(Icons.circle_outlined, color: Theme.of(context).primaryColor);
+      return IconButton(
+        icon:
+            Icon(Icons.circle_outlined, color: Theme.of(context).primaryColor),
+        onPressed: null,
+      );
     default:
       return IconButton(
         icon: Icon(color: Theme.of(context).primaryColor, Icons.play_arrow),
