@@ -52,7 +52,9 @@ class RadioList extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
+          return Divider(
+            color: Theme.of(context).dividerColor,
+          );
         },
         itemCount: Provider.of<RadioData>(context).stationList.length);
   }

@@ -39,12 +39,12 @@ class CategoriesWidget extends StatelessWidget {
                       border: Border.all(
                           width: 2,
                           color: index.isEven
-                              ? Theme.of(context).colorScheme.secondaryContainer
+                              ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary)),
                   child: Text(
                     stationNames[index].toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
-                        .copyWith(color: Theme.of(context).primaryColor),
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                 );
               },
@@ -76,7 +76,7 @@ class CategoriesWidget extends StatelessWidget {
                       border: Border.all(
                           width: 2,
                           color: index.isOdd
-                              ? Theme.of(context).colorScheme.secondaryContainer
+                              ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary)),
                   child: Text(
                     stationNames[index +
@@ -84,7 +84,7 @@ class CategoriesWidget extends StatelessWidget {
                             (stationNames.length ~/ 2)]
                         .toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
-                        .copyWith(color: Theme.of(context).primaryColor),
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                 );
               },

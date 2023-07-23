@@ -60,7 +60,7 @@ class _SearchDialogState extends State<SearchDialog> {
       title: Text(
         "Search",
         style: MontserratFont.paragraphMedium1
-            .copyWith(color: Theme.of(context).primaryColor),
+            .copyWith(color: Theme.of(context).colorScheme.primary),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 24),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -76,7 +76,7 @@ class _SearchDialogState extends State<SearchDialog> {
             children: [
               Icon(
                 Icons.search,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               Expanded(
                 child: TextField(
@@ -105,7 +105,7 @@ class _SearchDialogState extends State<SearchDialog> {
                             return InkWell(
                               splashColor: Theme.of(context)
                                   .colorScheme
-                                  .secondaryContainer,
+                                  .secondary,
                               onTap: () {
                                 bool wasStationAdded = Provider.of<RadioData>(
                                         context,
@@ -144,7 +144,9 @@ class _SearchDialogState extends State<SearchDialog> {
                             );
                           }),
                           separatorBuilder: (BuildContext context, int index) {
-                            return const Divider();
+                            return Divider(
+                              color: Theme.of(context).dividerColor,
+                            );
                           },
                           itemCount: searchedStations.length),
                     )

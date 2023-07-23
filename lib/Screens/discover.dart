@@ -44,7 +44,7 @@ class _DiscoverState extends State<Discover>
         elevation: 0,
         title: Text("PANDEMONIUM",
           style: MontserratFont.heading3
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
         actions: [
           Padding(
@@ -52,7 +52,7 @@ class _DiscoverState extends State<Discover>
             child: IconButton(
               onPressed: () {},
               icon:Icon(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   Platform.isIOS ? Icons.ios_share : Icons.share),
             ),
           )
@@ -86,7 +86,7 @@ class _DiscoverState extends State<Discover>
                       padding: const EdgeInsets.all(16),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(24),
                             topRight: Radius.circular(24)),
@@ -98,7 +98,7 @@ class _DiscoverState extends State<Discover>
                           Text(
                             "Popular Radios".toUpperCase(),
                             style: MontserratFont.heading4.copyWith(
-                                color: Theme.of(context).primaryColor),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           ListView.separated(
                             primary: false,
@@ -152,7 +152,9 @@ class _DiscoverState extends State<Discover>
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              return const Divider();
+                              return Divider(
+                                color: Theme.of(context).dividerColor,
+                              );
                             },
                           )
                         ],
@@ -174,7 +176,7 @@ class _DiscoverState extends State<Discover>
                             borderRadius:
                             const BorderRadius.all(Radius.circular(16)),
                             border: Border.all(
-                                color: Theme.of(context).primaryColor)),
+                                color: Theme.of(context).colorScheme.primary)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,13 +184,13 @@ class _DiscoverState extends State<Discover>
                             Text(
                               "Error loading popular radios. Retry",
                               style: MontserratFont.paragraphMedium2.copyWith(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               softWrap: true,
                             ),
                             const SizedBox(width: 4),
                             Icon(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 Icons.refresh),
                           ],
                         ),

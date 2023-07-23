@@ -13,14 +13,14 @@ class LibraryScreen extends StatelessWidget {
         elevation: 0,
         title: Text("Favourites",
           style: MontserratFont.heading3
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.help, color: Theme.of(context).primaryColor),
+              icon: Icon(Icons.help, color: Theme.of(context).colorScheme.primary),
             ),
           )
         ],
@@ -39,7 +39,7 @@ class LibraryScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  border: Border.all(color: Theme.of(context).primaryColor)),
+                  border: Border.all(color: Theme.of(context).colorScheme.primary)),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,11 +47,11 @@ class LibraryScreen extends StatelessWidget {
                   Text(
                     "Add Station",
                     style: MontserratFont.paragraphMedium2.copyWith(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Icon(color: Theme.of(context).primaryColor, Icons.add),
+                  Icon(color: Theme.of(context).colorScheme.primary, Icons.add),
                 ],
               ),
             ),

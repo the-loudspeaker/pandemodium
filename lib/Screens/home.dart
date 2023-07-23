@@ -63,6 +63,8 @@ class _MyHomePageState extends State<MyHomePage>
     return BottomNavigationBar(
       elevation: 16,
       useLegacyColorScheme: false,
+      selectedItemColor: Theme.of(context).colorScheme.primary,
+      unselectedItemColor: Theme.of(context).colorScheme.secondary,
       selectedLabelStyle: MontserratFont.paragraphSemiBold2,
       unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
       items: const <BottomNavigationBarItem>[
@@ -101,7 +103,6 @@ GestureDetector? _bottomSheetBuilder(BuildContext context) {
           },
           child: Container(
             height: 64.h,
-            color: Theme.of(context).scaffoldBackgroundColor,
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +120,7 @@ GestureDetector? _bottomSheetBuilder(BuildContext context) {
                                 ?.toUpperCase() ??
                             "",
                         style: MontserratFont.paragraphSemiBold1
-                            .copyWith(color: Theme.of(context).primaryColor),
+                            .copyWith(color: Theme.of(context).colorScheme.primary),
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -151,17 +152,17 @@ Widget _mediaIconWidget(BuildContext context) {
         onPressed: () {
           Provider.of<StationData>(context, listen: false).stopRadio();
         },
-        icon: Icon(color: Theme.of(context).primaryColor, Icons.stop),
+        icon: Icon(color: Theme.of(context).colorScheme.primary, Icons.stop),
       );
     case MediaStates.loading:
       return IconButton(
         icon:
-            Icon(Icons.circle_outlined, color: Theme.of(context).primaryColor),
+            Icon(Icons.circle_outlined, color: Theme.of(context).colorScheme.primary),
         onPressed: null,
       );
     default:
       return IconButton(
-        icon: Icon(color: Theme.of(context).primaryColor, Icons.play_arrow),
+        icon: Icon(color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
         onPressed: () {
           Provider.of<StationData>(context, listen: false).playRadio(
               Provider.of<StationData>(context, listen: false).selectedStation);

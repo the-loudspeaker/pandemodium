@@ -19,7 +19,7 @@ class RadioListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Theme.of(context).colorScheme.secondaryContainer,
+      splashColor: Theme.of(context).colorScheme.secondary,
       onLongPress: longPressCallback,
       onTap: onTapCallback,
       child: Padding(
@@ -29,7 +29,7 @@ class RadioListBuilder extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               Icons.radio,
               size: 32,
             ),
@@ -44,7 +44,7 @@ class RadioListBuilder extends StatelessWidget {
                   Text(
                     stationList[index].name?.toUpperCase() ?? "",
                     style: MontserratFont.paragraphSemiBold1
-                        .copyWith(color: Theme.of(context).primaryColor),
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -60,14 +60,14 @@ class RadioListBuilder extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   width: 1.0,
                 ),
               ),
               child: CircleAvatar(
                 radius: ScreenUtil().setHeight(16),
                 child: Icon(
-                    color: Theme.of(context).primaryColor, Icons.play_arrow),
+                    color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
               ),
             ),
           ],
