@@ -9,7 +9,7 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 ~~- [] move keyboard above everything.~~
 - [x] Retry button on API error.
 - [x] Searching and storing stable servers.
-- [] Notification playback
+- [x] Notification playback
   - [x] try just audio
 - [] Categories page.
   ~~- [] Fetch categories dynamically.~~

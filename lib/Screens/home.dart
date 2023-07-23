@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:pandemonium/Screens/discover.dart';
 import 'package:pandemonium/Screens/library.dart';
 import 'package:pandemonium/model/station_data.dart';
@@ -19,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   void initState() {
+    initBackgroundAudioService();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -77,6 +79,14 @@ class _MyHomePageState extends State<MyHomePage>
       onTap: _onItemTapped,
     );
   }
+}
+
+void initBackgroundAudioService() async {
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'pandemonium_bg_channel',
+    androidNotificationChannelName: 'Pandemonium',
+    androidNotificationOngoing: true,
+  );
 }
 
 GestureDetector? _bottomSheetBuilder(BuildContext context) {

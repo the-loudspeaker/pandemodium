@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'station.dart';
@@ -21,13 +22,23 @@ class StationData extends ChangeNotifier {
       //Do nothing.
     } else if (!player.playing &&
         inputStation.stationuuid == selectedStation.stationuuid) {
-      await player.setUrl(inputStation.urlResolved.toString());
+      await player.setAudioSource(
+        AudioSource.uri(Uri.parse(inputStation.urlResolved.toString()),
+            tag: MediaItem(
+                id: inputStation.stationuuid.toString(),
+                title: inputStation.name.toString())),
+      );
       await player.play();
       selectedStation = inputStation;
-    } else {
-      await player.stop();
+    }
+    else {
       selectedStation = inputStation;
-      await player.setUrl(inputStation.urlResolved.toString());
+      await player.setAudioSource(
+        AudioSource.uri(Uri.parse(inputStation.urlResolved.toString()),
+            tag: MediaItem(
+                id: inputStation.stationuuid.toString(),
+                title: inputStation.name.toString())),
+      );
       await player.play();
     }
     notifyListeners();
@@ -36,8 +47,6 @@ class StationData extends ChangeNotifier {
 
   void stopRadio() async {
     await player.stop();
-    // currentState = MediaStates.stop;
-    // selectedStation = inputStation;
     notifyListeners();
     saveLastPlayed();
   }
@@ -63,9 +72,6 @@ class StationData extends ChangeNotifier {
       final String lastStation = prefs.getString('last_played').toString();
       Station stationData = decode(lastStation);
       selectedStation = stationData;
-      if (currentState != MediaStates.end) {
-        currentState == MediaStates.end;
-      }
       notifyListeners();
     } on Exception catch (e) {
       debugPrint(e.toString());
