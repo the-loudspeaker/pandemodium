@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:pandemonium/Screens/discover.dart';
 import 'package:pandemonium/Screens/library.dart';
+import 'package:pandemonium/Services/playback_service.dart';
 import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   void initState() {
-    initBackgroundAudioService();
+    PlayBackService.initBackgroundAudioService();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -83,14 +83,6 @@ class _MyHomePageState extends State<MyHomePage>
   }
 }
 
-void initBackgroundAudioService() async {
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'pandemonium_bg_channel',
-    androidNotificationChannelName: 'Pandemonium',
-    androidNotificationOngoing: true,
-  );
-}
-
 GestureDetector? _bottomSheetBuilder(BuildContext context) {
   return Provider.of<StationData>(context).currentState != MediaStates.end
       ? GestureDetector(
@@ -119,8 +111,8 @@ GestureDetector? _bottomSheetBuilder(BuildContext context) {
                                 .name
                                 ?.toUpperCase() ??
                             "",
-                        style: MontserratFont.paragraphSemiBold1
-                            .copyWith(color: Theme.of(context).colorScheme.primary),
+                        style: MontserratFont.paragraphSemiBold1.copyWith(
+                            color: Theme.of(context).colorScheme.primary),
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -156,13 +148,14 @@ Widget _mediaIconWidget(BuildContext context) {
       );
     case MediaStates.loading:
       return IconButton(
-        icon:
-            Icon(Icons.circle_outlined, color: Theme.of(context).colorScheme.primary),
+        icon: Icon(Icons.circle_outlined,
+            color: Theme.of(context).colorScheme.primary),
         onPressed: null,
       );
     default:
       return IconButton(
-        icon: Icon(color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
+        icon: Icon(
+            color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
         onPressed: () {
           Provider.of<StationData>(context, listen: false).playRadio(
               Provider.of<StationData>(context, listen: false).selectedStation);

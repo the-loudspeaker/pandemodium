@@ -14,6 +14,6 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [] Categories page.
   ~~- [] Fetch categories dynamically.~~
 - [] Move to audio_service instead of just_audio_background.
-- [] Add icon.
+- [x] Add icon.
 - [] Release on f droid.
 - [] Release on play store.
