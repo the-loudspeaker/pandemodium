@@ -40,12 +40,12 @@ class _SearchDialogState extends State<SearchDialog> {
       });
       await RadioService.searchRadios(_textEditingController.text)
           .then((value) {
-            if(mounted) {
-              setState(() {
-                searchedStations = value.stationList!;
-                showLoader = false;
-              });
-            }
+        if (mounted) {
+          setState(() {
+            searchedStations = value.stationList!;
+            showLoader = false;
+          });
+        }
       });
     } else {
       setState(() {
@@ -103,27 +103,36 @@ class _SearchDialogState extends State<SearchDialog> {
                           shrinkWrap: true,
                           itemBuilder: ((context, index) {
                             return InkWell(
-                              splashColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondary,
+                              splashColor:
+                                  Theme.of(context).colorScheme.secondary,
                               onTap: () {
                                 bool wasStationAdded = Provider.of<RadioData>(
                                         context,
                                         listen: false)
                                     .addStation(searchedStations[index]);
-                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
                                   showCloseIcon: true,
-                                  closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
+                                  closeIconColor: Theme.of(context)
+                                      .snackBarTheme
+                                      .closeIconColor,
                                   margin: EdgeInsets.symmetric(
-                                      vertical: 64.h,
-                                      horizontal: 16.w),
+                                      vertical: 64.h, horizontal: 16.w),
                                   content: Text(
-                                    wasStationAdded ? "Radio station added to library" : "Radio station exists in library",
+                                    wasStationAdded
+                                        ? "Radio station added to library"
+                                        : "Radio station exists in library",
                                     style: MontserratFont.paragraphSemiBold2
-                                        .copyWith(color: Theme.of(context).snackBarTheme.actionTextColor),
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .snackBarTheme
+                                                .actionTextColor),
                                   ),
-                                  backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
+                                  backgroundColor: Theme.of(context)
+                                      .snackBarTheme
+                                      .backgroundColor,
                                   behavior: SnackBarBehavior.floating,
                                 ));
                                 Navigator.pop(context, 'Ok');

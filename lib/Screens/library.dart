@@ -11,7 +11,8 @@ class LibraryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Favourites",
+        title: Text(
+          "Favourites",
           style: MontserratFont.heading3
               .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
@@ -19,8 +20,26 @@ class LibraryScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.help, color: Theme.of(context).colorScheme.primary),
+              onPressed: () {
+                showAdaptiveDialog(
+                    context: context,
+                    builder: (context) {
+                      return SimpleDialog(
+                        alignment: Alignment.center,
+                        elevation: 1,
+                        contentPadding: const EdgeInsets.all(24),
+                        children: [
+                          Text(
+                              "Long press a station to add / remove from favorites.",
+                              style: MontserratFont.paragraphMedium2.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ))
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(Icons.help,
+                  color: Theme.of(context).colorScheme.primary),
             ),
           )
         ],
@@ -29,7 +48,7 @@ class LibraryScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              showDialog(
+              showAdaptiveDialog(
                   context: context,
                   builder: (context) {
                     return const SearchDialog();
@@ -39,7 +58,8 @@ class LibraryScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  border: Border.all(color: Theme.of(context).colorScheme.primary)),
+                  border:
+                      Border.all(color: Theme.of(context).colorScheme.primary)),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -38,8 +38,3 @@ class MontserratFont {
   static var tiny2 = GoogleFonts.montserrat(
       fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: -0.20);
 }
-
-class FontColors {
-  static var primaryTextColor = const Color(0xFF282828);
-  static var secondaryTextColor = const Color(0xFF828282);
-}
