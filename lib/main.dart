@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                 title: 'Pandemonium',
                 debugShowCheckedModeBanner: false,
                 color: Theme.of(context).colorScheme.primary,
-                theme: ThemeData(colorScheme: lightDynamic, useMaterial3: true),
+                theme: ThemeData(colorScheme: lightDynamic, fontFamily: "Monsterrat", useMaterial3: true),
                 home: const MyHomePage(),
               ),
             );

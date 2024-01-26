@@ -36,8 +36,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_staggered_grid_view: ^0.6.2
-  google_fonts: ^5.1.0
+  flutter_staggered_grid_view: ^0.7.0
   flutter_screenutil: ^5.7.0
   multicast_dns: ^0.3.2+3
   http: ^1.1.0
@@ -59,7 +58,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -105,3 +104,36 @@ flutter:
   assets:
     - lib/model/
 
+  fonts:
+    - family: Monsterrat
+      fonts:
+        - asset: fonts/Montserrat-BlackItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-LightItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-Black.ttf
+        - asset: fonts/Montserrat-Light.ttf
+        - asset: fonts/Montserrat-BoldItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-MediumItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-Bold.ttf
+        - asset: fonts/Montserrat-Medium.ttf
+        - asset: fonts/Montserrat-ExtraBoldItalic.ttf
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-ExtraBold.ttf
+        - asset: fonts/Montserrat-SemiBoldItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-ExtraLightItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-SemiBold.ttf
+        - asset: fonts/Montserrat-ExtraLight.ttf
+        - asset: fonts/Montserrat-ThinItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-Italic.ttf
+          style: italic
+        - asset: fonts/Montserrat-Thin.ttf
+        - asset: fonts/Montserrat-Italic-VariableFont_wght.ttf
+          style: italic
+        - asset: fonts/Montserrat-VariableFont_wght.ttf
+          style: normal
