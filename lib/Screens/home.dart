@@ -67,13 +67,13 @@ class _MyHomePageState extends State<MyHomePage>
       unselectedItemColor: Theme.of(context).colorScheme.secondary,
       selectedLabelStyle: MontserratFont.paragraphSemiBold2,
       unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: _tabController.index==0 ? const Icon(Icons.home) : const Icon(Icons.home_outlined),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.library_music),
+          icon: _tabController.index==1 ? const Icon(Icons.library_music) : const Icon(Icons.library_music_outlined),
           label: 'Library',
         ),
       ],
@@ -83,13 +83,12 @@ class _MyHomePageState extends State<MyHomePage>
   }
 }
 
-GestureDetector? _bottomSheetBuilder(BuildContext context) {
-  return Provider.of<StationData>(context).currentState != MediaStates.end
+Widget? _bottomSheetBuilder(BuildContext context) {
+  return Provider.of<StationData>(context).hasSelectedStationAndIsNotEnded
       ? GestureDetector(
-          onVerticalDragUpdate: (verticalDragUpdate) {
-            if (verticalDragUpdate.delta.dy > 1.5 &&
-                Provider.of<StationData>(context, listen: false).currentState !=
-                    MediaStates.end) {
+          onLongPress: () {
+            if (Provider.of<StationData>(context, listen: false).currentState !=
+                MediaStates.end) {
               Provider.of<StationData>(context, listen: false).endRadio();
             }
           },

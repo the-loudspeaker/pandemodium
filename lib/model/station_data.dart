@@ -55,6 +55,9 @@ class StationData extends ChangeNotifier {
     currentState = MediaStates.end;
     stopRadio();
   }
+  bool get hasSelectedStationAndIsNotEnded {
+    return selectedStation.name != null && currentState != MediaStates.end;
+  }
 
   void saveLastPlayed() async {
     try {
