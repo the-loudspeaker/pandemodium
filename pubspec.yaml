@@ -107,33 +107,6 @@ flutter:
   fonts:
     - family: Monsterrat
       fonts:
-        - asset: fonts/Montserrat-BlackItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-LightItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-Black.ttf
-        - asset: fonts/Montserrat-Light.ttf
-        - asset: fonts/Montserrat-BoldItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-MediumItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-Bold.ttf
-        - asset: fonts/Montserrat-Medium.ttf
-        - asset: fonts/Montserrat-ExtraBoldItalic.ttf
         - asset: fonts/Montserrat-Regular.ttf
-        - asset: fonts/Montserrat-ExtraBold.ttf
-        - asset: fonts/Montserrat-SemiBoldItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-ExtraLightItalic.ttf
-          style: italic
-        - asset: fonts/Montserrat-SemiBold.ttf
-        - asset: fonts/Montserrat-ExtraLight.ttf
-        - asset: fonts/Montserrat-ThinItalic.ttf
-          style: italic
         - asset: fonts/Montserrat-Italic.ttf
           style: italic
-        - asset: fonts/Montserrat-Thin.ttf
-        - asset: fonts/Montserrat-Italic-VariableFont_wght.ttf
-          style: italic
-        - asset: fonts/Montserrat-VariableFont_wght.ttf
-          style: normal
