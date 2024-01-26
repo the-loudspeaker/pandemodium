@@ -91,14 +91,14 @@ class _SearchDialogState extends State<SearchDialog> {
           ),
           showLoader
               ? Padding(
-                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(16)),
+                  padding: EdgeInsets.only(top: 16.h),
                   child: const CircularProgressIndicator(),
                 )
               : searchedStations.isNotEmpty
                   ? Container(
-                      padding: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
+                      padding: EdgeInsets.only(top: 8.h),
                       width: double.maxFinite,
-                      height: ScreenUtil().setHeight(180),
+                      height: 180.h,
                       child: ListView.separated(
                           shrinkWrap: true,
                           itemBuilder: ((context, index) {
@@ -114,6 +114,7 @@ class _SearchDialogState extends State<SearchDialog> {
                                     .hideCurrentSnackBar();
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
+                                  duration: const Duration(seconds: 1),
                                   showCloseIcon: true,
                                   closeIconColor: Theme.of(context)
                                       .snackBarTheme
@@ -154,7 +155,7 @@ class _SearchDialogState extends State<SearchDialog> {
                           }),
                           separatorBuilder: (BuildContext context, int index) {
                             return Divider(
-                              color: Theme.of(context).dividerColor,
+                              color: Theme.of(context).dividerColor
                             );
                           },
                           itemCount: searchedStations.length),

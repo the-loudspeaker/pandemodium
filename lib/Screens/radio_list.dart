@@ -14,27 +14,28 @@ class RadioList extends StatelessWidget {
     return ListView.separated(
         itemBuilder: (context, index) {
           return RadioListBuilder(
-            stationList: Provider.of<RadioData>(context).stationList.reversed.toList(),
+            stationList: Provider.of<RadioData>(context).favStationList.reversed.toList(),
             index: index,
             onTapCallback: (){
               debugPrint(
                   "Clicked on a station ${Provider.of<RadioData>(context, listen: false)
-                      .stationList.reversed
+                      .favStationList.reversed
                       .toList()[index].name}");
               Provider.of<StationData>(context,
                   listen: false)
                   .playRadio(
                   Provider.of<RadioData>(context, listen: false)
-                      .stationList.reversed
+                      .favStationList.reversed
                       .toList()[index]);
             },
             longPressCallback: () {
               Provider.of<RadioData>(context, listen: false).removeStation(
                   Provider.of<RadioData>(context, listen: false)
-                      .stationList.reversed
+                      .favStationList.reversed
                       .toList()[index]);
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 1),
                 showCloseIcon: true,
                 closeIconColor: Theme.of(context).snackBarTheme.closeIconColor,
                 margin: EdgeInsets.symmetric(
@@ -56,6 +57,6 @@ class RadioList extends StatelessWidget {
             color: Theme.of(context).dividerColor,
           );
         },
-        itemCount: Provider.of<RadioData>(context).stationList.length);
+        itemCount: Provider.of<RadioData>(context).favStationList.length);
   }
 }

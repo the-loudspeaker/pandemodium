@@ -11,9 +11,11 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [x] Searching and storing stable servers.
 - [x] Notification playback
   - [x] try just audio
-- [] Categories page.
+- [x] Categories page.
   ~~- [] Fetch categories dynamically.~~
-- [] Move to audio_service instead of just_audio_background.
+- [x] Move to audio_service instead of just_audio_background.
 - [x] Add icon.
 - [] Release on f droid.
 - [] Release on play store.
+- [] Swipe actions instead of long press.
+- [] Open when clicking on category.

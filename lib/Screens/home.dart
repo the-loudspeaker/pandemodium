@@ -7,6 +7,8 @@ import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/media_icon.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -69,11 +71,15 @@ class _MyHomePageState extends State<MyHomePage>
       unselectedLabelStyle: MontserratFont.paragraphSemiBold2,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: _tabController.index==0 ? const Icon(Icons.home) : const Icon(Icons.home_outlined),
+          icon: _tabController.index == 0
+              ? const Icon(Icons.home)
+              : const Icon(Icons.home_outlined),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: _tabController.index==1 ? const Icon(Icons.library_music) : const Icon(Icons.library_music_outlined),
+          icon: _tabController.index == 1
+              ? const Icon(Icons.library_music)
+              : const Icon(Icons.library_music_outlined),
           label: 'Library',
         ),
       ],
@@ -85,80 +91,45 @@ class _MyHomePageState extends State<MyHomePage>
 
 Widget? _bottomSheetBuilder(BuildContext context) {
   return Provider.of<StationData>(context).hasSelectedStationAndIsNotEnded
-      ? GestureDetector(
-          onLongPress: () {
-            if (Provider.of<StationData>(context, listen: false).currentState !=
-                MediaStates.end) {
-              Provider.of<StationData>(context, listen: false).endRadio();
-            }
-          },
-          child: Container(
-            height: 64.h,
-            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+      ? Container(
+          height: 64.h,
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Provider.of<StationData>(context)
+                              .selectedStation
+                              .name
+                              ?.toUpperCase() ??
+                          "",
+                      style: MontserratFont.paragraphSemiBold1.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
                         Provider.of<StationData>(context)
                                 .selectedStation
-                                .name
+                                .homepage
                                 ?.toUpperCase() ??
                             "",
-                        style: MontserratFont.paragraphSemiBold1.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                        style: MontserratFont.captionMedium.copyWith(
+                            color: Theme.of(context).colorScheme.secondary),
                         textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                          Provider.of<StationData>(context)
-                                  .selectedStation
-                                  .homepage
-                                  ?.toUpperCase() ??
-                              "",
-                          style: MontserratFont.captionMedium.copyWith(
-                              color: Theme.of(context).colorScheme.secondary),
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis)
-                    ],
-                  ),
+                        overflow: TextOverflow.ellipsis)
+                  ],
                 ),
-                _mediaIconWidget(context),
-              ],
-            ),
+              ),
+              mediaIconWidget(context),
+            ],
           ),
         )
       : null;
-}
-
-Widget _mediaIconWidget(BuildContext context) {
-  switch (Provider.of<StationData>(context).currentState) {
-    case MediaStates.play:
-      return IconButton(
-        onPressed: () {
-          Provider.of<StationData>(context, listen: false).stopRadio();
-        },
-        icon: Icon(color: Theme.of(context).colorScheme.primary, Icons.stop),
-      );
-    case MediaStates.loading:
-      return IconButton(
-        icon: Icon(Icons.circle_outlined,
-            color: Theme.of(context).colorScheme.primary),
-        onPressed: null,
-      );
-    default:
-      return IconButton(
-        icon: Icon(
-            color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
-        onPressed: () {
-          Provider.of<StationData>(context, listen: false).playRadio(
-              Provider.of<StationData>(context, listen: false).selectedStation);
-        },
-      );
-  }
 }

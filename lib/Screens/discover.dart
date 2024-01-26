@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/categories_widget.dart';
 import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
+import 'package:pandemonium/model/station.dart';
 import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/model/station_response.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
@@ -26,8 +27,8 @@ class _DiscoverState extends State<Discover>
 
   @override
   void initState() {
-    popularRadiosList = fetchPopularRadios();
     RadioService.dnsLookup();
+    popularRadiosList = fetchPopularRadios();
     super.initState();
   }
 
@@ -82,6 +83,7 @@ class _DiscoverState extends State<Discover>
               builder: (BuildContext context,
                   AsyncSnapshot<StationResponse> snapshot) {
                 if (snapshot.hasData) {
+                  List<Station> givenStations = snapshot.data!.stationList!;
                   return Container(
                       padding: const EdgeInsets.all(16),
                       width: MediaQuery.of(context).size.width,
@@ -103,21 +105,22 @@ class _DiscoverState extends State<Discover>
                           ListView.separated(
                             primary: false,
                             shrinkWrap: true,
-                            itemCount: snapshot.data!.stationList!.length,
+                            itemCount: givenStations.length,
                             itemBuilder: (context, index) {
                               return RadioListBuilder(
-                                stationList: snapshot.data!.stationList!,
+                                stationList: givenStations,
                                 index: index,
                                 longPressCallback: () {
                                   bool wasStationAdded = Provider.of<RadioData>(
                                       context,
                                       listen: false)
                                       .addStation(
-                                      snapshot.data!.stationList![index]);
+                                      givenStations[index]);
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
+                                    duration: const Duration(seconds: 1),
                                     showCloseIcon: true,
                                     closeIconColor: Theme.of(context)
                                         .snackBarTheme
@@ -142,11 +145,11 @@ class _DiscoverState extends State<Discover>
                                 },
                                 onTapCallback: () {
                                   debugPrint(
-                                      "Clicked on a station ${snapshot.data!.stationList![index].name}");
+                                      "Clicked on a station ${givenStations[index].name}");
                                   Provider.of<StationData>(context,
                                       listen: false)
                                       .playRadio(
-                                      snapshot.data!.stationList![index]);
+                                      givenStations[index]);
                                 },
                               );
                             },

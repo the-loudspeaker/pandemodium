@@ -47,6 +47,7 @@ class StationData extends ChangeNotifier {
 
   void stopRadio() async {
     await player.stop();
+    currentState = MediaStates.stop;
     notifyListeners();
     saveLastPlayed();
   }

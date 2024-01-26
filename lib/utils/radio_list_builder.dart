@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/model/station.dart';
+import 'package:pandemonium/model/station_data.dart';
+import 'package:provider/provider.dart';
 
 import 'custom_fonts.dart';
+import 'media_icon.dart';
 
 class RadioListBuilder extends StatelessWidget {
   final List<Station> stationList;
@@ -19,7 +22,7 @@ class RadioListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Theme.of(context).colorScheme.secondary,
+      splashColor: Theme.of(context).colorScheme.secondaryContainer,
       onLongPress: longPressCallback,
       onTap: onTapCallback,
       child: Padding(
@@ -33,9 +36,7 @@ class RadioListBuilder extends StatelessWidget {
               Icons.radio,
               size: 32,
             ),
-            const SizedBox(
-              width: 8,
-            ),
+            SizedBox(width: 8.w),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -56,19 +57,14 @@ class RadioListBuilder extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 1.0,
-                ),
-              ),
-              child: CircleAvatar(
-                radius: ScreenUtil().setHeight(16),
-                child: Icon(
-                    color: Theme.of(context).colorScheme.primary, Icons.play_arrow),
-              ),
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Provider.of<StationData>(context).selectedStation.name ==
+                      stationList[index].name
+                  ? mediaIconWidget(context)
+                  : Icon(
+                      color: Theme.of(context).colorScheme.primary,
+                      Icons.play_arrow),
             ),
           ],
         ),

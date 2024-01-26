@@ -5,13 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'station.dart';
 
 class RadioData extends ChangeNotifier {
-  List<Station> stationList = [];
+  List<Station> favStationList = [];
 
   bool addStation(Station newStation) {
-    if (stationList
+    if (favStationList
         .where((element) => element.stationuuid == newStation.stationuuid)
         .isEmpty) {
-      stationList.add(newStation);
+      favStationList.add(newStation);
       notifyListeners();
       saveData();
       return true;
@@ -22,7 +22,7 @@ class RadioData extends ChangeNotifier {
   }
 
   void removeStation(Station station) {
-    stationList.removeWhere((item) => item.stationuuid == station.stationuuid);
+    favStationList.removeWhere((item) => item.stationuuid == station.stationuuid);
     notifyListeners();
     saveData();
   }
@@ -30,7 +30,7 @@ class RadioData extends ChangeNotifier {
   void saveData() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final String encodedData = encode(stationList);
+      final String encodedData = encode(favStationList);
       await prefs.setString('radio_data', encodedData);
     } on Exception catch (e) {
       debugPrint(e.toString());
@@ -42,7 +42,7 @@ class RadioData extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       final String taskString = prefs.getString('radio_data').toString();
       List<Station> radioData = decode(taskString);
-      stationList = radioData;
+      favStationList = radioData;
       notifyListeners();
     } on Exception catch (e) {
       debugPrint(e.toString());
