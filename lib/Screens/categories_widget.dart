@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
-import 'package:pandemonium/utils/no_scrollglow_behaviour.dart';
+import 'package:pandemonium/utils/utils.dart';
 
 class CategoriesWidget extends StatelessWidget {
-  final List<String> stationNames = [
+  final List<String> categoryNamesList = [
     "Science",
     "Pop",
     "Music",
@@ -16,6 +16,7 @@ class CategoriesWidget extends StatelessWidget {
     "Jazz",
     "Electronic"
   ];
+
   CategoriesWidget({super.key});
 
   @override
@@ -23,16 +24,16 @@ class CategoriesWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: ScreenUtil().setHeight(130),
+          height: 130.h,
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: stationNames.length ~/ 2,
+              itemCount: categoryNamesList.length ~/ 2,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: ScreenUtil().setWidth(((index % 2) + 2) * 75),
+                  width: (((index % 2) + 2) * 75).w,
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -42,34 +43,31 @@ class CategoriesWidget extends StatelessWidget {
                               ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary)),
                   child: Text(
-                    stationNames[index].toUpperCase(),
+                    categoryNamesList[index].toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
                         .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  width: 8,
-                );
+                return const SizedBox(width: 8);
               },
             ),
           ),
         ),
+        SizedBox(height: 16.h),
         SizedBox(
-          height: ScreenUtil().setHeight(16),
-        ),
-        SizedBox(
-          height: ScreenUtil().setHeight(110),
+          height: 110.h,
           child: ScrollConfiguration(
             behavior: NoScrollGlowBehaviour(),
             child: ListView.separated(
-              itemCount: stationNames.length - (stationNames.length ~/ 2),
+              itemCount:
+                  categoryNamesList.length - (categoryNamesList.length ~/ 2),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  width: ScreenUtil().setWidth((((index + 1) % 2) + 2) * 70),
+                  width: ((((index + 1) % 2) + 2) * 70).w,
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -79,9 +77,9 @@ class CategoriesWidget extends StatelessWidget {
                               ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary)),
                   child: Text(
-                    stationNames[index +
-                            stationNames.length -
-                            (stationNames.length ~/ 2)]
+                    categoryNamesList[index +
+                            categoryNamesList.length -
+                            (categoryNamesList.length ~/ 2)]
                         .toUpperCase(),
                     style: MontserratFont.paragraphSemiBold2
                         .copyWith(color: Theme.of(context).colorScheme.primary),
@@ -89,9 +87,7 @@ class CategoriesWidget extends StatelessWidget {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  width: 8,
-                );
+                return const SizedBox(width: 8);
               },
             ),
           ),

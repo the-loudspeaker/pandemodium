@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/Screens/discover.dart';
 import 'package:pandemonium/Screens/library.dart';
 import 'package:pandemonium/Services/playback_service.dart';
 import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
+import 'package:pandemonium/utils/media_player_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
-import '../utils/media_icon.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -57,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage>
         ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
-      bottomSheet: _bottomSheetBuilder(context),
+      bottomSheet: mediaPlayerBottomSheet(context),
     );
   }
 
@@ -87,49 +85,4 @@ class _MyHomePageState extends State<MyHomePage>
       onTap: _onItemTapped,
     );
   }
-}
-
-Widget? _bottomSheetBuilder(BuildContext context) {
-  return Provider.of<StationData>(context).hasSelectedStationAndIsNotEnded
-      ? Container(
-          height: 64.h,
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      Provider.of<StationData>(context)
-                              .selectedStation
-                              .name
-                              ?.toUpperCase() ??
-                          "",
-                      style: MontserratFont.paragraphSemiBold1.copyWith(
-                          color: Theme.of(context).colorScheme.primary),
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                        Provider.of<StationData>(context)
-                                .selectedStation
-                                .homepage
-                                ?.toUpperCase() ??
-                            "",
-                        style: MontserratFont.captionMedium.copyWith(
-                            color: Theme.of(context).colorScheme.secondary),
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis)
-                  ],
-                ),
-              ),
-              mediaIconWidget(context),
-            ],
-          ),
-        )
-      : null;
 }

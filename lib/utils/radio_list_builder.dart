@@ -5,18 +5,20 @@ import 'package:pandemonium/model/station_data.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_fonts.dart';
-import 'media_icon.dart';
+import 'utils.dart';
 
 class RadioListBuilder extends StatelessWidget {
   final List<Station> stationList;
   final int index;
   final VoidCallback? longPressCallback;
   final VoidCallback? onTapCallback;
+
   const RadioListBuilder({
     super.key,
     required this.stationList,
     required this.index,
-    this.longPressCallback, this.onTapCallback,
+    this.longPressCallback,
+    this.onTapCallback,
   });
 
   @override
