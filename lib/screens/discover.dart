@@ -2,15 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pandemonium/Screens/categories_widget.dart';
-import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
 import 'package:pandemonium/model/station.dart';
 import 'package:pandemonium/model/station_data.dart';
 import 'package:pandemonium/model/station_response.dart';
+import 'package:pandemonium/services/radio_service.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/radio_list_builder.dart';
 import 'package:provider/provider.dart';
+
+import 'categories_widget.dart';
 
 class Discover extends StatefulWidget {
   const Discover({

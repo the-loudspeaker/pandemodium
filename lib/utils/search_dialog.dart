@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pandemonium/Services/radio_service.dart';
 import 'package:pandemonium/model/radio_data.dart';
 import 'package:pandemonium/model/station.dart';
+import 'package:pandemonium/services/radio_service.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_fonts.dart';

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pandemonium/Screens/discover.dart';
-import 'package:pandemonium/Screens/library.dart';
-import 'package:pandemonium/Services/playback_service.dart';
 import 'package:pandemonium/model/station_data.dart';
+import 'package:pandemonium/services/playback_service.dart';
 import 'package:pandemonium/utils/custom_fonts.dart';
 import 'package:pandemonium/utils/media_player_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+
+import 'discover.dart';
+import 'library.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

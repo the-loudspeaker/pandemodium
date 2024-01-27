@@ -2,11 +2,12 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pandemonium/Screens/discover.dart';
-import 'package:pandemonium/Screens/library.dart';
 import 'package:pandemonium/model/radio_data.dart';
 import 'package:pandemonium/model/station_data.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/discover.dart';
+import 'screens/library.dart';
 
 void main() {
   runApp(const MyApp());
