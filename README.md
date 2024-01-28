@@ -17,5 +17,6 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [x] Add icon.
 - [] Release on f droid.
 - [] Release on play store.
-- [] Swipe actions instead of long press.
+- [] Swipe action to remove from library.
 - [] Open when clicking on category.
+- [x] Persistent navbar and player

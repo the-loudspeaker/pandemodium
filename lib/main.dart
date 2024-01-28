@@ -8,27 +8,42 @@ import 'package:provider/provider.dart';
 
 import 'screens/discover.dart';
 import 'screens/library.dart';
+import 'utils/bottom_sheet_and_navbar.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final GoRouter _router = GoRouter(
+  initialLocation: "/",
+  navigatorKey: _rootNavigatorKey,
   routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const Discover();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'library',
-          builder: (BuildContext context, GoRouterState state) {
-            return const LibraryScreen();
-          },
-        ),
-      ],
-    ),
+    ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          print(state.matchedLocation);
+          return ScaffoldBottomSheetAndNavBar(
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+              path: '/',
+              parentNavigatorKey: _shellNavigatorKey,
+              routes: <RouteBase>[
+                GoRoute(
+                    path: 'library',
+                    parentNavigatorKey: _shellNavigatorKey,
+                    builder: (BuildContext context, GoRouterState state) {
+                      return const LibraryScreen();
+                    })
+              ],
+              builder: (BuildContext context, GoRouterState state) {
+                return const Discover();
+              }),
+        ]),
   ],
 );
 

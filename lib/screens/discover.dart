@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pandemonium/model/radio_data.dart';
@@ -14,16 +12,13 @@ import 'package:provider/provider.dart';
 import 'categories_widget.dart';
 
 class Discover extends StatefulWidget {
-  const Discover({
-    super.key,
-  });
+  const Discover({super.key});
 
   @override
   State<Discover> createState() => _DiscoverState();
 }
 
-class _DiscoverState extends State<Discover>
-    with AutomaticKeepAliveClientMixin<Discover> {
+class _DiscoverState extends State<Discover> {
   late Future<StationResponse> popularRadiosList;
 
   @override
@@ -34,17 +29,14 @@ class _DiscoverState extends State<Discover>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
     Provider.of<RadioData>(context, listen: false).getData();
     Provider.of<StationData>(context, listen: false).getLastPlayed();
-    super.build(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("PANDEMONIUM",
+        title: Text(
+          "PANDEMONIUM",
           style: MontserratFont.heading3
               .copyWith(color: Theme.of(context).colorScheme.primary),
         ),
@@ -52,12 +44,29 @@ class _DiscoverState extends State<Discover>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
-              onPressed: () {},
-              icon:Icon(
-                  color: Theme.of(context).colorScheme.primary,
-                  Platform.isIOS ? Icons.ios_share : Icons.share),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: const Duration(seconds: 3),
+                  showCloseIcon: true,
+                  closeIconColor:
+                      Theme.of(context).snackBarTheme.closeIconColor,
+                  margin:
+                      EdgeInsets.symmetric(vertical: 64.h, horizontal: 16.w),
+                  content: Text(
+                    "Long press a station to add to favourites.",
+                    style: MontserratFont.paragraphSemiBold2.copyWith(
+                        color: Theme.of(context).snackBarTheme.actionTextColor),
+                  ),
+                  backgroundColor:
+                      Theme.of(context).snackBarTheme.backgroundColor,
+                  behavior: SnackBarBehavior.floating,
+                ));
+              },
+              icon: Icon(Icons.help,
+                  color: Theme.of(context).colorScheme.primary),
             ),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -68,8 +77,7 @@ class _DiscoverState extends State<Discover>
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 child: Text(
                   "Categories".toUpperCase(),
                   style: MontserratFont.heading4
@@ -113,10 +121,9 @@ class _DiscoverState extends State<Discover>
                                 index: index,
                                 longPressCallback: () {
                                   bool wasStationAdded = Provider.of<RadioData>(
-                                      context,
-                                      listen: false)
-                                      .addStation(
-                                      givenStations[index]);
+                                          context,
+                                          listen: false)
+                                      .addStation(givenStations[index]);
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context)
@@ -134,9 +141,9 @@ class _DiscoverState extends State<Discover>
                                           : "Radio station exists in library",
                                       style: MontserratFont.paragraphSemiBold2
                                           .copyWith(
-                                          color: Theme.of(context)
-                                              .snackBarTheme
-                                              .actionTextColor),
+                                              color: Theme.of(context)
+                                                  .snackBarTheme
+                                                  .actionTextColor),
                                     ),
                                     backgroundColor: Theme.of(context)
                                         .snackBarTheme
@@ -148,9 +155,8 @@ class _DiscoverState extends State<Discover>
                                   debugPrint(
                                       "Clicked on a station ${givenStations[index].name}");
                                   Provider.of<StationData>(context,
-                                      listen: false)
-                                      .playRadio(
-                                      givenStations[index]);
+                                          listen: false)
+                                      .playRadio(givenStations[index]);
                                 },
                               );
                             },
@@ -178,7 +184,7 @@ class _DiscoverState extends State<Discover>
                             horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             border: Border.all(
                                 color: Theme.of(context).colorScheme.primary)),
                         child: Row(
