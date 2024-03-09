@@ -155,8 +155,7 @@ class _SearchDialogState extends State<SearchDialog> {
                           }),
                           separatorBuilder: (BuildContext context, int index) {
                             return Divider(
-                              color: Theme.of(context).dividerColor
-                            );
+                                color: Theme.of(context).dividerColor);
                           },
                           itemCount: searchedStations.length),
                     )

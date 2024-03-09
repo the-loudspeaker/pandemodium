@@ -30,8 +30,7 @@ class StationData extends ChangeNotifier {
       );
       await player.play();
       selectedStation = inputStation;
-    }
-    else {
+    } else {
       selectedStation = inputStation;
       await player.setAudioSource(
         AudioSource.uri(Uri.parse(inputStation.urlResolved.toString()),
@@ -52,10 +51,10 @@ class StationData extends ChangeNotifier {
     saveLastPlayed();
   }
 
-  void endRadio() async {
-    currentState = MediaStates.end;
-    stopRadio();
+  void destroyRadio() async {
+    await player.dispose();
   }
+
   bool get hasSelectedStationAndIsNotEnded {
     return selectedStation.name != null && currentState != MediaStates.end;
   }

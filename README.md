@@ -20,3 +20,5 @@ Explore the world of music and podcasts with a touch of magic and mystery.
 - [] Swipe action to remove from library.
 - [] Open when clicking on category.
 - [x] Persistent navbar and player
+- [] Slide transitions for tabs.
+- [] Images for categories.

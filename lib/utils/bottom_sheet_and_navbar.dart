@@ -30,7 +30,9 @@ class _ScaffoldBottomSheetAndNavBarState
 
   @override
   void dispose() {
-    Provider.of<StationData>(context, listen: false).endRadio();
+    Provider.of<StationData>(context, listen: false).stopRadio();
+    Provider.of<StationData>(context, listen: false).destroyRadio();
+    Provider.of<StationData>(context, listen: false).dispose();
     super.dispose();
   }
 

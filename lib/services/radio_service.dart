@@ -9,14 +9,14 @@ String baseurl = "http://all.api.radio-browser.info";
 class RadioService {
   static Future<StationResponse> getPopularStations() async {
     var response = await http.get(Uri.parse(
-        '$baseurl/json/stations/search?hidebroken=true&order=clickcount&reverse=true&limit=5'));
+        '$baseurl/json/stations/search?hidebroken=true&order=clickcount&reverse=true&lastcheckok=true&country=Ind&limit=5'));
     return StationResponse.fromList(jsonDecode(response.body));
   }
 
-  static Future<CategoryResponse> getCategories() async {
+  static Future<StationResponse> getCategoryStations(String query) async {
     var response = await http.get(Uri.parse(
-        '$baseurl/json/tags?order=stationcount&reverse=true&limit=10'));
-    return CategoryResponse.fromList(jsonDecode(response.body));
+        '$baseurl/json/stations/search?order=clicktrend&reverse=true&limit=11&hidebroken=true&lastcheckok=true&country=India&tag=${query.toLowerCase()}'));
+    return StationResponse.fromList(jsonDecode(response.body));
   }
 
   static Future<StationResponse> searchRadios(String query) async {
@@ -29,12 +29,12 @@ class RadioService {
     // The domain name of the service you want to lookup.
     const String domainName = '_api._tcp.radio-browser.info';
     const String apiEndpoint = 'all.api.radio-browser.info';
-    var listOfRecords = await DnsUtils.lookupRecord(domainName, RRecordType.SRV);
-    if(listOfRecords!.isNotEmpty){
+    var listOfRecords =
+        await DnsUtils.lookupRecord(domainName, RRecordType.SRV);
+    if (listOfRecords!.isNotEmpty) {
       baseurl = "http://${listOfRecords.first.data.split(" ").last}";
-    }
-    else{
-      baseurl="http://$apiEndpoint";
+    } else {
+      baseurl = "http://$apiEndpoint";
     }
   }
 }

@@ -51,7 +51,12 @@ class RadioListBuilder extends StatelessWidget {
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(stationList[index].homepage?.toUpperCase() ?? "",
+                  Text(
+                      stationList[index].homepage?.toLowerCase() ??
+                          stationList[index]
+                              .urlResolved
+                              .toString()
+                              .toLowerCase(),
                       style: MontserratFont.captionMedium.copyWith(
                           color: Theme.of(context).colorScheme.secondary),
                       textAlign: TextAlign.left,

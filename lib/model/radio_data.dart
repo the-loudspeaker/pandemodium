@@ -15,14 +15,14 @@ class RadioData extends ChangeNotifier {
       notifyListeners();
       saveData();
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
 
   void removeStation(Station station) {
-    favStationList.removeWhere((item) => item.stationuuid == station.stationuuid);
+    favStationList
+        .removeWhere((item) => item.stationuuid == station.stationuuid);
     notifyListeners();
     saveData();
   }
@@ -60,11 +60,9 @@ class RadioData extends ChangeNotifier {
   static List<Station> decode(String stations) {
     var data = (jsonDecode(stations) as List<dynamic>?);
     if (data != null) {
-      return (jsonDecode(stations) as List<dynamic>?)!
-          .map<Station>((task) {
-            return Station.fromJson(task);
-          })
-          .toList();
+      return (jsonDecode(stations) as List<dynamic>?)!.map<Station>((task) {
+        return Station.fromJson(task);
+      }).toList();
     } else {
       return <Station>[];
     }

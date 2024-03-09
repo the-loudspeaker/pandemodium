@@ -47,7 +47,7 @@ dependencies:
   just_audio: ^0.9.34
   just_audio_background: ^0.0.1-beta.10
   dynamic_color: ^1.6.6
-  audio_service: ^0.18.10
+  audio_service: ^0.18.12
   go_router: ^13.0.1
 
 dev_dependencies:
