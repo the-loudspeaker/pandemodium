@@ -23,7 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion 34
+    namespace "com.radio.pandemonium"
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -52,4 +53,8 @@ android {
 
 flutter {
     source '../..'
+}
+
+dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
