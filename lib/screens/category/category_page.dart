@@ -70,6 +70,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ],
               );
             } else if (snapshot.hasError) {
+              debugPrint(snapshot.error.toString());
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

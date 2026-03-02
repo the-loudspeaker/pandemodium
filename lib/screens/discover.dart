@@ -23,7 +23,6 @@ class _DiscoverState extends State<Discover> {
 
   @override
   void initState() {
-    RadioService.dnsLookup();
     popularRadiosList = fetchPopularRadios();
     super.initState();
   }

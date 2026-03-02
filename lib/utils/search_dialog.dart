@@ -46,11 +46,15 @@ class _SearchDialogState extends State<SearchDialog> {
             showLoader = false;
           });
         }
+      }, onError: (error) {
+            if(mounted) {
+              setState(() => searchedStations = []);
+            }
       });
     } else {
-      setState(() {
-        searchedStations = [];
-      });
+      if(mounted) {
+        setState(() => searchedStations = []);
+      }
     }
   }
 
