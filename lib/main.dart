@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +12,18 @@ import 'screens/discover.dart';
 import 'screens/library.dart';
 import 'utils/bottom_sheet_and_navbar.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -23,7 +36,6 @@ final GoRouter _router = GoRouter(
     ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
-          print(state.matchedLocation);
           return ScaffoldBottomSheetAndNavBar(
             child: child,
           );
